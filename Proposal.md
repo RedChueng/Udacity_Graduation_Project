@@ -72,16 +72,20 @@ logloss值越小，模型的表现越好。
 
 ### 设计大纲
 
-1. 数据预处理。利用kaggle API下载数据集，因为下载的是zip文件，需要用wget解压；正确读取训练数据后，对训练数据进行可视化，探索数据特征；由于训练集数据存在的尺寸和排序问题，预计要对训练集进行压缩、规则化、独热编码和乱序等处理；将训练数据按照一定比例划分为训练集、验证集和测试集，划分测试集的目的是为了测试模型的准确率。
-2. 模型搭建。Keras预训练了几个基准模型，直接使用Keras加载模型，预计将搭建VGG16、ResNet50、InceptionV3、Xception四个基准模型。
-3. 模型训练。利用划分好的训练集和验证集对四个基准模型进行依次训练，根据验证集logloss的表现选出最优的基准模型结构。
-4. 模型调参。由于项目需要满足logloss基准阈值，当模型表现不能满足阈值要求时，需要对模型进行调参，主要调节图像尺寸、epochs、batch_size、Dropout层keep_prob、卷积层步长、池化层采样规则、激活函数等。
-5. 模型评估。在模型的训练过程中，可视化展示每个迭代在训练集和验证集上的logloss值和accuracy值，根据这两个值来评估模型的表现，模型在验证集上的logloss值趋于平稳时停止训练，防止过拟合。在模型训练完成后，利用划分好的测试集对模型进行测试，查看模型在测试集上的logloss值和accuracy值。
-6. 可视化。首先，在模型完成最终训练后，我会采用Ipython的SVG模块以及Keras的model_to_dot模块对最终模型结构做可视化展示；其次，我会使用matplotlib的pyplot模块对模型训练过程中训练集logloss和验证集logloss的变化做可视化展示；最后，在测试集上完成测试后，打印出在测试集上的logloss和accuracy，并利用pyplot随机展示几张图片以及预测的概率，以做验证。
-7. 给出预测结果。利用最终模型预测测试集数据，生成每个图像的label，提交到kaggle。
+1. 数据预处理。1）利用kaggle API下载数据集，因为下载的是zip文件，需要用`wget`解压；2）正确读取训练数据后，对训练数据进行可视化，探索数据特征；3）由于训练集数据存在的尺寸和排序问题，预计要对训练集进行压缩、规则化、独热编码和乱序等处理；4）将训练数据按照一定比例划分为训练集和验证集。
+2. 模型搭建。Keras预训练了几个模型，可直接使用Keras加载模型，本项目将使`VGG16`、`ResNet50`、`InceptionV3`、`Xception`四个预训练模型作为基本的模型结构。
+3.  模型训练。Keras预训练模型不能直接用于本项目，需要在输出层增加一个分类器，我预计将使用`softmax`作为最初的尝试，优化器使用二分类适用的`Nadam()`，损失函数使用`binary_crossentropy`，评估指标使用`accuracy`，利用`compile()`编译模型；利用划分好的训练集和验证集对四个编译好的模型进行依次训练，根据验证集logloss的表现选出最优的模型结构.
+4.  模型调参。由于项目需要满足logloss基准阈值，当模型表现不能满足阈值要求时，需要对模型进行调参，主要调节参数包括训练的超参数`epochs`、`batch_size`，对输入添加Dropout层、调节drop rate，向模型输出层增加层、修改输出层激活函数，调整模型优化器等。
+5.  模型评估。在模型的训练过程中，可视化展示每个迭代在训练集和验证集上的logloss值和accuracy值，根据这两个值来评估模型的表现，利用`EarlyStopping()`方法，模型在验证集上的logloss值趋于平稳时停止训练，防止过拟合。
+6.  可视化。1）在模型完成最终训练后，我会采用Ipython的`SVG()`方法以及Keras的`model_to_dot()`方法对最终模型结构做可视化展示；2）我会使用matplotlib的`pyplot`模块方法对模型训练过程中训练集logloss和验证集logloss的变化做可视化展示，并利用`pyplot`随机展示几张图片以及预测的概率，以做验证。
+7.  给出预测结果。利用最终模型预测测试集数据，生成每个图像的label，提交到kaggle。
 
 ### 参考文献
+
 [1] Simonyan K, Zisserman A. Very Deep Convolutional Networks for Large-Scale Image Recognition[J]. Computer Science, 2014.
+
 [2] He K, Zhang X, Ren S, et al. Deep Residual Learning for Image Recognition[J]. 2015:770-778.
+
 [3] Szegedy C, Vanhoucke V, Ioffe S, et al. Rethinking the Inception Architecture for Computer Vision[J]. 2015:2818-2826.
+
 [4] Chollet F. Xception: Deep Learning with Depthwise Separable Convolutions[J]. 2016:1800-1807.
