@@ -1,5 +1,5 @@
 # 机器学习纳米学位
-##毕业项目
+## 毕业项目
 张红亮 Udacity
 
 2018年8月14日
@@ -30,12 +30,13 @@
 $$
 \textrm{LogLoss} = - \frac{1}{n} \sum_{i=1}^n \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)\right],
 $$
+
 其中，
 
 * $ n $ 为测试集中图片的数量；
-* $ \hat {y}_i​$ 为预测图片内容为狗的概率；
+* $ \hat {y}_i $ 为预测图片内容为狗的概率；
 * $ y_i $ 如果图片内容是狗，则为1，如果是猫，则为0；
-* $ \log() $ 为自然（底为$e$）对数。
+* $ \log() $ 为自然（底为$ e $）对数。
 
 logloss值越小，模型的表现越好。
 
@@ -178,21 +179,19 @@ kaggle训练集宽高分布直方图：
 
 ![model](./img/model_para_1.png)
 
-模型训练过程loss和accuracy变化图：
-
-![plot]()
-
 最终模型在验证集上的loss值为0.0328，accuracy为0.9882，也就是一千张图片只错了12张，超过了人类的准确率，kaggle最终得分0.5719，超过了项目要求的基准值。
 
 #### 融合模型
 
 融合模型通过同时使用`ResNet50`、`InceptionV3`和`Xception`三个keras预训练模型提取训练集图像特征，然后直接添加`Dorpout`层和`sigmoid`分类器，模型结构如下图所示：
 
-![model]()
+![model](./img/model_2.png)
+
+![model](./img/model_para_2.png)
 
 模型训练过程loss和accuracy变化图：
 
-![plot]()
+![loss](./img/loss_2.png)
 
 最终模型在验证集上的loss值为0.0069，accurac为0.9985，也就是一千张图片只错了2张，超过了人类的准确率，kaggle最终得分0.04017，排名第17名，超过了项目要求的基准值。
 
@@ -204,19 +203,29 @@ kaggle训练集宽高分布直方图：
 
 ### 结果可视化
 
-模型结构可视化：
+**模型结构可视化：**
+
+模型一：
 
 ![model](./img/model_1.png)
 
+模型二：
 
+![model](./img/model_2.png)
 
-模型训练过程可视化：
+**模型训练过程可视化：**
 
+![loss](./img/loss_2.png)
 
+**模型预测结果可视化：**
 
-模型预测结果可视化：
+模型一预测结果示例：
 
+![prediction_1](./img/prediction_1.png)
 
+模型二预测结果示例：
+
+![prediction_2](./img/prediction_2.png)
 
 从预测结果可见，模型对于猫狗识别的准确率接近100%。
 
