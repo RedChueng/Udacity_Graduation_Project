@@ -15,6 +15,8 @@ The Oxford-IIIT Pet Dataset数据：
 
 本项目主要在aws p3.2xlarge上完成，一共训练了两个模型。主要使用的库有`numpy`、`cv2`、`matplotlib`、`pandas`、`keras`、`csv`、`h5py`和`shutil`。机器系统为Ubuntu，GPU为NVIDIA Tesla V100。整个模型创建、调整和训练过程耗时70小时，其中p2.xlarge耗时13小时，p3.2xlarge耗时57小时。
 
+![gpu](./img/gpu.png)
+
 ![ec2](./img/aws_ec2.png)
 
 **模型一：** 使用`cv2`预处理图片，使用`NesNet50`作为单预训练模型，模型在训练集上的`loss`值为0.0328，准确率为0.9882，kaggle分数0.05719。模型使用aws p3.2xlarge训练，数据集和测试集的图片预处理时间大约10分钟，单个epoch上模型训练耗时104s；
