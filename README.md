@@ -8,8 +8,11 @@
 项目使用数据下载地址：
 
 kaggle竞赛数据：
+
 ```kaggle competitions download -c dogs-vs-cats-redux-kernels-edition```
+
 The Oxford-IIIT Pet Dataset数据：
+
 ```http://www.robots.ox.ac.uk/%7Evgg/data/pets/data/images.tar.gz```
 
 
